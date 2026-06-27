@@ -6,15 +6,27 @@ import { usePathname } from "next/navigation";
 export default function OverlayUI() {
   const { 
     boardroomMode, setBoardroomMode, 
-    activeColor, activeLogo, activeTypo 
+    activeColor, activeLogo, brandDirection 
   } = useDecision();
   
   const pathname = usePathname();
 
-  // Do not render OverlayUI on Intro or Reveal
-  if (pathname === "/" || pathname === "/reveal") {
+  // Do not render OverlayUI on Welcome or Blueprint
+  if (pathname === "/" || pathname === "/blueprint") {
     return null;
   }
+
+  const getLogoRationale = () => {
+    if (activeLogo === 'monogram') return 'The monogram roots the brand in heritage and exclusivity.';
+    if (activeLogo === 'luxury') return 'Modern serif commands higher price points naturally.';
+    return 'Minimal geometric attracts the design and architecture crowd.';
+  };
+
+  const getColorRationale = () => {
+    if (activeColor === 'emerald') return 'Emerald breaks the industrial mold, establishing a premium oasis.';
+    if (activeColor === 'coral') return 'Coral fosters high-energy social engagement for creatives.';
+    return 'Ocean provides a calm, focused environment for remote workers.';
+  };
 
   return (
     <div className={`fixed inset-0 pointer-events-none z-50 transition-opacity duration-1000 ${boardroomMode ? 'opacity-0' : 'opacity-100'}`}>
@@ -41,17 +53,18 @@ export default function OverlayUI() {
         <p className="font-body text-[10px] tracking-widest uppercase text-[var(--text-secondary)] mb-4">Strategic Logic</p>
         
         <div className="space-y-4">
+           
            <div>
              <span className="font-body text-[8px] uppercase tracking-widest text-[var(--text-secondary)] block mb-1">Color Advantage</span>
              <span className="font-body text-xs text-[var(--text-primary)]">
-               {activeColor === 'emerald' ? 'Emerald breaks the industrial mold, establishing a premium oasis.' : activeColor === 'coral' ? 'Coral fosters high-energy social engagement for Gen-Z creatives.' : 'Ocean provides a calm, focused environment for remote workers.'}
+               {getColorRationale()}
              </span>
            </div>
            
            <div>
-             <span className="font-body text-[8px] uppercase tracking-widest text-[var(--text-secondary)] block mb-1">Typeface Perception</span>
+             <span className="font-body text-[8px] uppercase tracking-widest text-[var(--text-secondary)] block mb-1">Mark Perception</span>
              <span className="font-body text-xs text-[var(--text-primary)]">
-               {activeTypo === 'playfair' ? 'Serif typography commands higher price points naturally.' : activeTypo === 'inter' ? 'Clean sans-serif reduces cognitive load on digital menus.' : 'Brutalist typography attracts the design and architecture crowd.'}
+               {getLogoRationale()}
              </span>
            </div>
         </div>

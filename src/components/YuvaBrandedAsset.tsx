@@ -3,7 +3,7 @@ import { useDecision } from "@/context/DecisionContext";
 import Image from "next/image";
 
 export default function YuvaBrandedAsset({ type }: { type: 'cup' | 'storefront' | 'menu' | 'instagram' }) {
-  const { activeLogo, activeColor, activeTypo } = useDecision();
+  const { activeLogo, activeColor } = useDecision();
 
   const getLogo = () => {
     switch (activeLogo) {

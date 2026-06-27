@@ -1,100 +1,89 @@
 "use client";
 import { useDecision, LogoOption } from "@/context/DecisionContext";
-import { useState } from "react";
-import { ChevronLeft, ChevronRight, Check } from "lucide-react";
+import YuvaBrandedAsset from "@/components/YuvaBrandedAsset";
+import { Check } from "lucide-react";
 import { useRouter } from "next/navigation";
 
 export default function LogoPage() {
-  const { setActiveLogo, addVote, boardroomMode, activeLogo } = useDecision();
+  const { activeLogo, setActiveLogo } = useDecision();
   const router = useRouter();
-  
-  const logos: { id: LogoOption, component: any, name: string }[] = [
-    { id: 'monogram', name: 'The Monogram', component: <span className="font-heading text-[15rem] font-bold tracking-tighter leading-none drop-shadow-2xl">YV</span> },
-    { id: 'luxury', name: 'Luxury Serif', component: <span className="font-heading text-[12rem] font-black uppercase tracking-widest leading-none drop-shadow-2xl">Yuva</span> },
-    { id: 'geometric', name: 'Minimal Geometric', component: <span className="font-heading text-[10rem] font-light uppercase tracking-[0.3em] leading-none whitespace-nowrap drop-shadow-2xl">Y / V / A</span> },
-  ];
 
-  const [currentIndex, setCurrentIndex] = useState(0);
+  const handleSelect = (logo: LogoOption) => {
+    setActiveLogo(logo);
+  };
 
-  const handleNext = () => setCurrentIndex((prev) => (prev + 1) % logos.length);
-  const handlePrev = () => setCurrentIndex((prev) => (prev - 1 + logos.length) % logos.length);
-
-  const confirmLogo = () => {
-    setActiveLogo(logos[currentIndex].id);
+  const saveDecision = () => {
     router.push("/color");
   };
 
-  const handleVote = (vote: any) => addVote(`logo_${logos[currentIndex].id}`, vote);
+  const logos = [
+    { id: 'monogram', name: 'The Monogram' },
+    { id: 'luxury', name: 'Luxury Serif' },
+    { id: 'geometric', name: 'Minimal Geometric' }
+  ];
 
   return (
-    <div className="h-screen w-screen bg-[var(--bg-primary)] text-[var(--text-primary)] flex flex-col relative overflow-hidden animate-in fade-in duration-700">
+    <div className="h-screen w-screen bg-[var(--bg-primary)] text-[var(--text-primary)] flex flex-col relative overflow-hidden transition-colors duration-1000">
       
       {/* Visual Depth Background */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(255,255,255,0.03)_0%,transparent_60%)] pointer-events-none" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,rgba(255,255,255,0.02)_0%,transparent_70%)] pointer-events-none" />
 
       <header className="absolute top-8 left-16 z-20">
-        <p className="font-body text-[var(--text-secondary)] text-[10px] tracking-[0.3em] uppercase mb-2">Arena 01</p>
-        <h2 className="font-heading text-2xl font-black uppercase tracking-widest">Brand Mark</h2>
+        <p className="font-body text-[var(--text-secondary)] text-[10px] tracking-[0.3em] uppercase mb-2">Workshop Module 02</p>
+        <h2 className="font-heading text-2xl font-black uppercase tracking-widest">Logo Exploration</h2>
       </header>
 
-      <div className="flex-1 flex items-center justify-center relative z-10">
-        {!boardroomMode && (
-          <button onClick={handlePrev} className="absolute left-16 z-20 p-4 hover:bg-[var(--text-primary)]/10 rounded-full transition-colors">
-            <ChevronLeft size={48} strokeWidth={1} />
+      {/* Selector Console */}
+      <div className="absolute top-8 right-16 z-20 flex gap-4">
+        {logos.map(l => (
+          <button 
+            key={l.id}
+            onClick={() => handleSelect(l.id as LogoOption)}
+            className={`px-6 py-3 rounded-full font-body text-xs uppercase tracking-widest transition-all ${activeLogo === l.id ? 'bg-[var(--accent)] text-[var(--bg-primary)] font-bold shadow-[0_0_20px_rgba(var(--accent-rgb),0.3)]' : 'border border-[var(--text-secondary)]/30 text-[var(--text-secondary)] hover:border-[var(--text-primary)]'}`}
+          >
+            {l.name}
           </button>
-        )}
-
-        <div className="text-center animate-in zoom-in-95 duration-500">
-           <div className="text-[var(--text-primary)] mb-8">
-             {logos[currentIndex].component}
-           </div>
-           {!boardroomMode && (
-              <p className="font-body text-[var(--text-secondary)] tracking-[0.3em] uppercase text-sm">{logos[currentIndex].name}</p>
-           )}
-        </div>
-
-        {!boardroomMode && (
-          <button onClick={handleNext} className="absolute right-16 z-20 p-4 hover:bg-[var(--text-primary)]/10 rounded-full transition-colors">
-            <ChevronRight size={48} strokeWidth={1} />
-          </button>
-        )}
+        ))}
       </div>
 
-      {/* Decision Console */}
-      <div className={`h-32 border-t border-[var(--text-secondary)]/10 flex items-center justify-between px-16 bg-[var(--bg-secondary)]/80 backdrop-blur-xl absolute bottom-0 w-full transition-transform duration-500 ${boardroomMode ? 'translate-y-full' : 'translate-y-0'}`}>
-        
-        <div className="flex gap-2">
-          <VoteBtn emoji="❤️" label="Love" onClick={() => handleVote('love')} />
-          <VoteBtn emoji="👍" label="Like" onClick={() => handleVote('like')} />
-          <VoteBtn emoji="🧐" label="Maybe" onClick={() => handleVote('maybe')} />
-          <VoteBtn emoji="❌" label="Reject" onClick={() => handleVote('reject')} />
-          <div className="w-[1px] h-8 bg-[var(--text-secondary)]/30 mx-4" />
-          <VoteBtn emoji="⭐" label="Shortlist" onClick={() => handleVote('shortlist')} />
-        </div>
+      {/* The Environment Grid */}
+      <div className="flex-1 p-8 pt-32 pb-32 relative z-10 flex items-center justify-center">
+        <div className="w-full max-w-7xl h-[65vh] grid grid-cols-3 gap-8 animate-in zoom-in-95 duration-700">
+          
+          <div className="flex flex-col gap-4 h-full rounded-[2rem] overflow-hidden shadow-2xl relative group">
+             <div className="absolute inset-0 bg-black/20 z-10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm pointer-events-none">
+                <span className="font-body text-white uppercase tracking-widest text-xs font-bold drop-shadow-md">Signage</span>
+             </div>
+             <YuvaBrandedAsset type="storefront" />
+          </div>
 
+          <div className="flex flex-col gap-4 h-full rounded-[2rem] overflow-hidden shadow-2xl relative group">
+             <div className="absolute inset-0 bg-black/20 z-10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm pointer-events-none">
+                <span className="font-body text-white uppercase tracking-widest text-xs font-bold drop-shadow-md">Packaging</span>
+             </div>
+             <YuvaBrandedAsset type="cup" />
+          </div>
+
+          <div className="flex flex-col gap-4 h-full rounded-[2rem] overflow-hidden shadow-2xl relative group">
+             <div className="absolute inset-0 bg-black/20 z-10 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-sm pointer-events-none">
+                <span className="font-body text-white uppercase tracking-widest text-xs font-bold drop-shadow-md">Digital</span>
+             </div>
+             <YuvaBrandedAsset type="instagram" />
+          </div>
+
+        </div>
+      </div>
+
+      {/* Confirmation Console */}
+      <div className="fixed bottom-16 left-1/2 -translate-x-1/2 z-50">
         <button 
-          onClick={confirmLogo}
-          className="bg-[var(--text-primary)] text-[var(--bg-primary)] px-12 py-4 rounded-full font-body text-xs uppercase tracking-widest font-bold flex items-center gap-2 hover:scale-105 transition-transform"
+          onClick={saveDecision}
+          className="bg-[var(--accent)] text-[var(--bg-primary)] px-12 py-4 rounded-full font-body text-xs uppercase tracking-widest font-bold flex items-center gap-2 hover:scale-105 transition-transform shadow-[0_10px_40px_rgba(var(--accent-rgb),0.3)]"
         >
-          <Check size={16} /> Confirm Selection
+          Save Favorite Logo <Check size={16} />
         </button>
-
       </div>
-      
-      {/* Invisible Global Advance for Boardroom Mode */}
-      {boardroomMode && (
-        <button onClick={confirmLogo} className="absolute inset-0 z-0 cursor-pointer" aria-label="Advance Presentation" />
-      )}
 
     </div>
-  );
-}
-
-function VoteBtn({ emoji, label, onClick }: any) {
-  return (
-    <button onClick={onClick} className="flex flex-col items-center gap-2 p-3 rounded-xl hover:bg-[var(--text-primary)]/5 transition-colors">
-      <span className="text-xl">{emoji}</span>
-      <span className="font-body text-[8px] uppercase tracking-widest text-[var(--text-secondary)]">{label}</span>
-    </button>
   );
 }
