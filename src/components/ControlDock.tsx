@@ -12,8 +12,8 @@ export default function ControlDock() {
   const { hasCompletedFlow, boardroomMode } = useDecision();
   const pathname = usePathname();
 
-  // Only show dock after they have finished the reveal sequence, and not in boardroom mode.
-  if (!hasCompletedFlow || boardroomMode || pathname === "/reveal") return null;
+  // Only hide the dock if we are in boardroom mode (presenting) or on the reveal sequence page.
+  if (boardroomMode || pathname === "/reveal") return null;
 
   const navItems = [
     { path: '/', icon: <Play size={18} />, label: 'Intro' },
