@@ -1,67 +1,62 @@
 "use client";
 import { useDecision } from "@/context/DecisionContext";
-import { motion, AnimatePresence } from "framer-motion";
-import { Presentation, X } from "lucide-react";
+import { Maximize, Minimize, Settings2 } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export default function OverlayUI() {
   const { 
     boardroomMode, setBoardroomMode, 
-    brandDirection, activeColor, activeTypo 
+    activeColor, activeLogo, activeTypo 
   } = useDecision();
+  
+  const pathname = usePathname();
 
-  const getBusinessValue = () => {
-    switch (brandDirection) {
-      case 'tropical-luxury':
-        return "Tropical Luxury bypasses the saturated industrial market in Kavuri Hills, demanding higher price points.";
-      case 'urban-tropical':
-        return "Urban Tropical immediately captures the remote-work founder demographic, maximizing weekday dwell time.";
-      case 'sunset-social':
-        return "Sunset Social Club drives high-margin evening operations, converting a cafe into a night-time creator hub.";
-      default:
-        return "";
-    }
-  };
+  // Do not render OverlayUI on Intro or Reveal
+  if (pathname === "/" || pathname === "/reveal") {
+    return null;
+  }
 
   return (
-    <>
-      {/* Boardroom Mode Toggle (Always visible unless in Boardroom Mode, then it becomes a subtle exit button) */}
-      <div className="fixed top-8 right-8 z-50">
-        {!boardroomMode ? (
-          <button 
-            onClick={() => setBoardroomMode(true)}
-            className="flex items-center gap-2 bg-[var(--text-primary)] text-[var(--bg-primary)] px-6 py-3 rounded-full font-body text-xs uppercase tracking-widest font-bold hover:scale-105 transition-transform shadow-2xl"
-          >
-            <Presentation size={16} /> Present
-          </button>
-        ) : (
-          <button 
-            onClick={() => setBoardroomMode(false)}
-            className="flex items-center gap-2 bg-[var(--bg-secondary)]/50 backdrop-blur-md text-[var(--text-primary)]/50 hover:text-[var(--text-primary)] px-4 py-2 rounded-full font-body text-xs uppercase tracking-widest transition-colors border border-[var(--text-secondary)]/20"
-          >
-            <X size={14} /> Exit
-          </button>
-        )}
+    <div className={`fixed inset-0 pointer-events-none z-50 transition-opacity duration-1000 ${boardroomMode ? 'opacity-0' : 'opacity-100'}`}>
+      
+      <div className="absolute top-8 right-8 pointer-events-auto flex items-center gap-4">
+        
+        {/* Boardroom Mode Toggle */}
+        <button 
+          onClick={() => setBoardroomMode(!boardroomMode)}
+          className="flex items-center gap-2 bg-[var(--text-primary)] text-[var(--bg-primary)] px-4 py-2 rounded-full font-body text-[10px] uppercase tracking-widest hover:scale-105 transition-all shadow-xl"
+        >
+          {boardroomMode ? <Minimize size={14} /> : <Maximize size={14} />}
+          <span>{boardroomMode ? 'Exit' : 'Present'}</span>
+        </button>
+        
+        <button className="w-10 h-10 rounded-full bg-[var(--bg-secondary)] border border-[var(--text-secondary)]/20 flex items-center justify-center text-[var(--text-primary)] hover:bg-[var(--text-primary)] hover:text-[var(--bg-primary)] transition-colors shadow-xl">
+          <Settings2 size={16} />
+        </button>
+
       </div>
 
-      {/* "Why This Wins" Card (Hidden in Boardroom Mode) */}
-      <AnimatePresence>
-        {!boardroomMode && (
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 20 }}
-            className="fixed bottom-8 right-8 z-40 max-w-xs bg-[var(--bg-secondary)]/80 backdrop-blur-2xl border border-[var(--accent)]/30 p-6 rounded-2xl shadow-[0_10px_40px_rgba(var(--accent-rgb),0.15)]"
-          >
-            <p className="font-body text-[var(--accent)] text-[10px] uppercase tracking-[0.2em] font-bold mb-3 flex items-center gap-2">
-              <span className="w-1.5 h-1.5 rounded-full bg-[var(--accent)] animate-pulse" />
-              Why This Wins
-            </p>
-            <p className="font-body text-[var(--text-primary)] text-xs leading-relaxed font-light">
-              {getBusinessValue()}
-            </p>
-          </motion.div>
-        )}
-      </AnimatePresence>
-    </>
+      {/* Global Strategic Rationale Card */}
+      <div className="absolute bottom-8 left-8 w-80 bg-[var(--bg-secondary)]/90 backdrop-blur-2xl border border-[var(--text-secondary)]/20 p-6 rounded-2xl pointer-events-auto shadow-2xl">
+        <p className="font-body text-[10px] tracking-widest uppercase text-[var(--text-secondary)] mb-4">Strategic Logic</p>
+        
+        <div className="space-y-4">
+           <div>
+             <span className="font-body text-[8px] uppercase tracking-widest text-[var(--text-secondary)] block mb-1">Color Advantage</span>
+             <span className="font-body text-xs text-[var(--text-primary)]">
+               {activeColor === 'emerald' ? 'Emerald breaks the industrial mold, establishing a premium oasis.' : activeColor === 'coral' ? 'Coral fosters high-energy social engagement for Gen-Z creatives.' : 'Ocean provides a calm, focused environment for remote workers.'}
+             </span>
+           </div>
+           
+           <div>
+             <span className="font-body text-[8px] uppercase tracking-widest text-[var(--text-secondary)] block mb-1">Typeface Perception</span>
+             <span className="font-body text-xs text-[var(--text-primary)]">
+               {activeTypo === 'playfair' ? 'Serif typography commands higher price points naturally.' : activeTypo === 'inter' ? 'Clean sans-serif reduces cognitive load on digital menus.' : 'Brutalist typography attracts the design and architecture crowd.'}
+             </span>
+           </div>
+        </div>
+      </div>
+
+    </div>
   );
 }

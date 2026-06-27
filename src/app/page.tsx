@@ -1,63 +1,27 @@
-"use client";
-import { useDecision } from "@/context/DecisionContext";
-import { AnimatePresence, motion } from "framer-motion";
-import IntroScreen from "@/components/IntroScreen";
-import DirectionArena from "@/components/arenas/DirectionArena";
-import LogoArena from "@/components/arenas/LogoArena";
-import ColorArena from "@/components/arenas/ColorArena";
-import TypographyArena from "@/components/arenas/TypographyArena";
-import ExperienceYuvaMode from "@/components/arenas/ExperienceYuvaMode";
-import CompetitorIntelligence from "@/components/arenas/CompetitorIntelligence";
-import CommunityMode from "@/components/arenas/CommunityMode";
-import FutureEcosystemMode from "@/components/arenas/FutureEcosystemMode";
-import RevealSequence from "@/components/arenas/RevealSequence";
-import ExecutiveSummary from "@/components/arenas/ExecutiveSummary";
-import OverlayUI from "@/components/OverlayUI";
-import ControlDock from "@/components/ControlDock";
+import Link from "next/link";
+import { MoveRight } from "lucide-react";
 
-export default function Page() {
-  const { activeArenaIndex, hasCompletedFlow, boardroomMode } = useDecision();
-
-  const arenas = [
-    <IntroScreen key="0" />,
-    <DirectionArena key="1" />,
-    <LogoArena key="2" />,
-    <ColorArena key="3" />,
-    <TypographyArena key="4" />,
-    <ExperienceYuvaMode key="5" />,
-    <CompetitorIntelligence key="6" />,
-    <CommunityMode key="7" />,
-    <FutureEcosystemMode key="8" />,
-    <RevealSequence key="9" />,
-    <ExecutiveSummary key="10" />
-  ];
-
+export default function IntroScreen() {
   return (
-    <main className="h-screen w-screen overflow-hidden bg-[var(--bg-primary)]">
+    <div className="h-screen w-screen bg-[#000000] text-[#FFFFFF] flex flex-col justify-end p-8 md:p-16 relative overflow-hidden">
       
-      {/* Global Persistant UI */}
-      {/* Only show OverlayUI (Boardroom Toggle + Business Logic Card) if we are not in Intro(0) or Reveal(9) */}
-      {activeArenaIndex > 0 && activeArenaIndex !== 9 && <OverlayUI />}
+      {/* Premium Cinematic Background Gradient */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(255,255,255,0.08)_0%,transparent_80%)] pointer-events-none" />
 
-      {/* Free Roam Navigation Dock (Only visible when unlocked and not in boardroom mode) */}
-      {hasCompletedFlow && !boardroomMode && activeArenaIndex !== 9 && (
-        <ControlDock />
-      )}
+      {/* Massive Typography */}
+      <div className="relative z-10 animate-fade-in-up">
+        <h1 className="font-heading text-super-massive font-black tracking-tighter uppercase leading-none drop-shadow-2xl">
+          YUVA
+        </h1>
+      </div>
 
-      {/* Arena Transitions */}
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={activeArenaIndex}
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 1.05 }}
-          transition={{ duration: 0.8, ease: [0.76, 0, 0.24, 1] }}
-          className="h-full w-full"
-        >
-          {arenas[activeArenaIndex]}
-        </motion.div>
-      </AnimatePresence>
-
-    </main>
+      <Link 
+        href="/strategy" 
+        className="absolute top-1/2 right-16 -translate-y-1/2 flex flex-col items-center gap-4 text-white/50 hover:text-white transition-colors group hidden md:flex"
+      >
+        <span className="font-body text-[10px] tracking-[0.5em] uppercase" style={{ writingMode: 'vertical-rl' }}>Begin Pitch</span>
+        <div className="w-[1px] h-24 bg-gradient-to-b from-white/30 to-transparent group-hover:from-white transition-all" />
+      </Link>
+    </div>
   );
 }
