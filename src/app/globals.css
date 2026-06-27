@@ -4,93 +4,84 @@
 
 @layer base {
   :root {
-    /* Base defaults to Volcanic Black to start dark */
-    --bg-primary: #0A0A0A;
-    --bg-secondary: #141414;
-    --accent: #D4AF37;
-    --text-primary: #FFFFFF;
-    --text-secondary: #888888;
-    --font-heading: var(--font-playfair);
-    --font-body: var(--font-inter);
-  }
-
-  /* COLOR 1: Emerald & Sand (Premium Luxury) */
-  .color-emerald {
+    --font-heading: var(--font-playfair), serif;
+    --font-body: var(--font-inter), sans-serif;
+    
+    /* V2 Core Color Tokens */
     --bg-primary: #0F1C16;
-    --bg-secondary: #172A21;
-    --accent: #E5D5C1; /* Sand */
-    --text-primary: #F3F4F6;
-    --text-secondary: #A3B1AA;
+    --bg-secondary: #0A120E;
+    --text-primary: #F2EBE5;
+    --text-secondary: #8E9B95;
+    --accent: #D4AF37;
+    --accent-rgb: 212, 175, 55;
   }
 
-  /* COLOR 2: Volcanic Black & Palm Gold (Nightlife/Social) */
-  .color-volcanic {
-    --bg-primary: #0C0C0C;
-    --bg-secondary: #161616;
-    --accent: #C79A3B; /* Palm Gold */
-    --text-primary: #FAFAFA;
-    --text-secondary: #71717A;
+  /* COLOR ARENAS */
+  body.color-emerald {
+    --bg-primary: #0B1914;
+    --bg-secondary: #07100D;
+    --text-primary: #F0F4F1;
+    --text-secondary: #748A80;
+    --accent: #E2C275;
+    --accent-rgb: 226, 194, 117;
   }
 
-  /* COLOR 3: Ocean Blue & White Sand (Morning/Fresh) */
-  .color-ocean {
-    --bg-primary: #0B192C;
-    --bg-secondary: #112541;
-    --accent: #F1F5F9; /* White Sand */
-    --text-primary: #FFFFFF;
-    --text-secondary: #94A3B8;
+  body.color-coral {
+    --bg-primary: #210F0C;
+    --bg-secondary: #170A08;
+    --text-primary: #F9EFE9;
+    --text-secondary: #A9837A;
+    --accent: #FF7E67;
+    --accent-rgb: 255, 126, 103;
   }
 
-  /* COLOR 4: Warm Terracotta & Forest Green (Earthy/Grounded) */
-  .color-terracotta {
-    --bg-primary: #3B241C;
-    --bg-secondary: #4A2E24;
-    --accent: #4ade80; /* Forest Green Pop */
-    --text-primary: #FEF3C7;
-    --text-secondary: #D1D5DB;
+  body.color-ocean {
+    --bg-primary: #0B141C;
+    --bg-secondary: #070D13;
+    --text-primary: #E8F0F8;
+    --text-secondary: #6B859C;
+    --accent: #5D99C6;
+    --accent-rgb: 93, 153, 198;
   }
 
-  /* TYPOGRAPHY OVERRIDES */
-  .typo-serif {
-    --font-heading: var(--font-playfair);
-    --font-body: var(--font-inter);
+  /* TYPOGRAPHY ARENAS */
+  body.typo-playfair {
+    --font-heading: var(--font-playfair), serif;
+    --font-body: var(--font-inter), sans-serif;
   }
 
-  .typo-sans {
-    --font-heading: var(--font-inter);
-    --font-body: var(--font-inter);
+  body.typo-inter {
+    --font-heading: var(--font-inter), sans-serif;
+    --font-body: var(--font-inter), sans-serif;
+    letter-spacing: -0.02em;
   }
 
-  .typo-editorial {
-    --font-heading: var(--font-lora);
-    --font-body: var(--font-lora);
+  body.typo-satoshi {
+    /* Using Oswald as a placeholder for a modern tall display sans if Satoshi isn't loaded */
+    --font-heading: var(--font-oswald), sans-serif;
+    --font-body: var(--font-inter), sans-serif;
+    text-transform: uppercase;
+  }
+
+  body {
+    transition: background-color 1.5s cubic-bezier(0.76, 0, 0.24, 1),
+                color 1.5s cubic-bezier(0.76, 0, 0.24, 1);
+  }
+
+  /* Massive Typography Utilities */
+  .text-massive {
+    font-size: 15vw;
+    line-height: 0.8;
+  }
+
+  .text-super-massive {
+    font-size: 25vw;
+    line-height: 0.75;
   }
 }
 
-body {
-  background-color: var(--bg-primary);
-  color: var(--text-primary);
-  font-family: var(--font-body);
-  transition: background-color 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
-              color 1.2s cubic-bezier(0.16, 1, 0.3, 1);
-  overflow: hidden; /* This is an app now, not a scrolling site. The internal views will handle their own scrolling if needed, but mostly it's full screen. */
-}
-
-h1, h2, h3, h4, h5, h6, .font-heading {
-  font-family: var(--font-heading);
-}
-
-/* Custom Scrollbar for internal overflow areas */
+/* Custom Scrollbar for hidden horizontal overflow */
 ::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: var(--text-secondary);
-  border-radius: 10px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: var(--text-primary);
+  width: 0px;
+  background: transparent; 
 }
