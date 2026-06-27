@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter, Playfair_Display, Lora, Oswald } from "next/font/google";
 import "./globals.css";
 import { DecisionProvider } from "@/context/DecisionContext";
-import Cursor from "@/components/Cursor";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 const playfair = Playfair_Display({ subsets: ["latin"], variable: "--font-playfair" });
@@ -23,7 +22,6 @@ export default function RootLayout({
     <html lang="en" className={`dark ${inter.variable} ${playfair.variable} ${lora.variable} ${oswald.variable}`}>
       <body className={`${inter.className} bg-[var(--bg-primary)] text-[var(--text-primary)] antialiased overflow-hidden selection:bg-[var(--accent)] selection:text-[var(--bg-primary)]`}>
         <DecisionProvider>
-          <Cursor />
           {children}
         </DecisionProvider>
       </body>
