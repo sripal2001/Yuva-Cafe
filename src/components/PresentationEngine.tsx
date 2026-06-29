@@ -17,17 +17,20 @@ export default function PresentationEngine() {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === "ArrowRight") {
-        setCurrentStep(Math.min(SLIDES.length - 1, currentStep + 1));
+      if (e.key === "ArrowRight" || e.key === " ") {
+        setCurrentStep(prev => Math.min(SLIDES.length - 1, prev + 1));
       } else if (e.key === "ArrowLeft") {
-        setCurrentStep(Math.max(0, currentStep - 1));
+        setCurrentStep(prev => Math.max(0, prev - 1));
       }
     };
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [currentStep, setCurrentStep]);
+  }, [setCurrentStep]);
 
   const CurrentSlideComponent = SLIDES[currentStep];
+
+  const handleNext = () => setCurrentStep(prev => Math.min(SLIDES.length - 1, prev + 1));
+  const handlePrev = () => setCurrentStep(prev => Math.max(0, prev - 1));
 
   return (
     <div className="w-full h-full bg-black overflow-hidden relative selection:bg-white selection:text-black">
@@ -45,9 +48,9 @@ export default function PresentationEngine() {
       </AnimatePresence>
 
       {/* Subtle Navigation Hint */}
-      <div className="absolute bottom-8 right-12 opacity-30 font-body text-[10px] uppercase tracking-[0.3em] text-white flex gap-4 pointer-events-none">
-        <span>← Prev</span>
-        <span>Next →</span>
+      <div className="absolute bottom-8 right-12 z-50 font-body text-[10px] uppercase tracking-[0.3em] text-white flex gap-4">
+        <button onClick={handlePrev} className="opacity-30 hover:opacity-100 transition-opacity p-2">← Prev</button>
+        <button onClick={handleNext} className="opacity-30 hover:opacity-100 transition-opacity p-2">Next →</button>
       </div>
     </div>
   );
