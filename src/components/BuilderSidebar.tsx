@@ -18,10 +18,10 @@ export default function BuilderSidebar() {
   const { currentStep, setCurrentStep } = useDecision();
 
   return (
-    <div className="flex flex-col h-full bg-[var(--bg-secondary)]">
+    <div className="flex flex-col h-full bg-transparent">
       
       {/* Header */}
-      <div className="p-8 border-b border-[var(--text-secondary)]/10 sticky top-0 bg-[var(--bg-secondary)]/90 backdrop-blur z-10">
+      <div className="p-8 border-b border-[var(--text-secondary)]/10 sticky top-0 bg-transparent z-10">
         <h1 className="font-heading text-xl font-black tracking-tighter uppercase mb-1">YUVA CAFE</h1>
         <p className="font-body text-[10px] tracking-widest uppercase text-[var(--text-secondary)]">Brand Builder V4</p>
       </div>
@@ -32,7 +32,7 @@ export default function BuilderSidebar() {
       </div>
 
       {/* Footer Navigation */}
-      <div className="p-8 border-t border-[var(--text-secondary)]/10 bg-[var(--bg-secondary)] sticky bottom-0 z-10 flex justify-between items-center">
+      <div className="p-8 border-t border-[var(--text-secondary)]/10 bg-transparent sticky bottom-0 z-10 flex justify-between items-center">
         <button 
           onClick={() => setCurrentStep(Math.max(0, currentStep - 1))}
           disabled={currentStep === 0}

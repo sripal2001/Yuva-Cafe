@@ -36,7 +36,7 @@ export default function LivePreview() {
   }
 
   return (
-    <div className={`w-full h-full overflow-y-auto ${getThemeClass()} transition-colors duration-1000 bg-[var(--bg-primary)] text-[var(--text-primary)]`}>
+    <div className={`w-full h-full overflow-y-auto ${getThemeClass()} transition-colors duration-1000 bg-[var(--bg-primary)] text-[var(--text-primary)] md:pl-[450px]`}>
       <div className={`w-full min-h-full ${getLayoutClass()} transition-all duration-1000`}>
         
         {/* HERO SECTION */}
@@ -49,9 +49,9 @@ export default function LivePreview() {
           <div className="relative z-20">
             <h4 className="font-body text-xs uppercase tracking-[0.4em] text-[var(--accent)] mb-6">Kavuri Hills, HYD</h4>
             
-            <h1 className={`${getFontClass()} ${websiteStyle === 'editorial' ? 'text-7xl md:text-[10rem] uppercase tracking-tighter leading-none' : 'text-5xl md:text-8xl font-medium tracking-tight'} mb-8 transition-all duration-700`}>
-              {logo === 'modern' ? 'YUVA' : logo === 'community' ? 'yuva.' : 'Yuva'}
-            </h1>
+            <div className={`mb-8 transition-all duration-700 ${websiteStyle === 'editorial' ? 'scale-125 origin-left' : ''}`}>
+              <YuvaBrandedAsset type="hero-logo" />
+            </div>
             
             <p className="font-body text-lg md:text-xl max-w-xl text-[var(--text-secondary)] leading-relaxed">
               {visualStyle === 'botanical' 

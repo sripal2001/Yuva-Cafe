@@ -2,17 +2,54 @@
 import { useDecision } from "@/context/DecisionContext";
 import Image from "next/image";
 
-export default function YuvaBrandedAsset({ type }: { type: 'cup' | 'storefront' | 'menu' | 'instagram' }) {
-  const { logo, color } = useDecision();
+export default function YuvaBrandedAsset({ type }: { type: 'cup' | 'storefront' | 'menu' | 'instagram' | 'hero-logo' }) {
+  const { logo } = useDecision();
 
-  const getLogo = () => {
+  const getLogo = (className: string = "w-full h-full") => {
     switch (logo) {
-      case 'luxury': return <span className="font-heading text-6xl font-black uppercase tracking-widest">Yuva</span>;
-      case 'modern': return <span className="font-heading text-7xl font-light uppercase tracking-[0.3em]">Y / V / A</span>;
-      case 'community': return <span className="font-heading text-8xl font-bold tracking-tighter lowercase">yuva.</span>;
-      default: return <span className="font-heading text-6xl font-black uppercase tracking-widest">Yuva</span>;
+      case 'luxury': 
+        return (
+          <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+            {/* Elegant Monogram YV */}
+            <path d="M160 40L200 120L240 40" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"/>
+            <path d="M200 120V160" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/>
+            <path d="M140 40H180" stroke="currentColor" strokeWidth="2"/>
+            <path d="M220 40H260" stroke="currentColor" strokeWidth="2"/>
+            <path d="M180 160H220" stroke="currentColor" strokeWidth="2"/>
+            <text x="200" y="190" fontFamily="Playfair Display, serif" fontSize="24" fontWeight="600" textAnchor="middle" fill="currentColor" letterSpacing="0.3em">YUVA</text>
+            <circle cx="200" cy="100" r="90" stroke="currentColor" strokeWidth="1" strokeDasharray="4 4" opacity="0.5"/>
+          </svg>
+        );
+      case 'modern': 
+        return (
+          <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+            {/* Brutalist Geometric */}
+            <rect x="150" y="50" width="100" height="100" stroke="currentColor" strokeWidth="8"/>
+            <circle cx="200" cy="100" r="20" fill="currentColor"/>
+            <text x="200" y="185" fontFamily="Inter, sans-serif" fontSize="28" fontWeight="800" textAnchor="middle" fill="currentColor" letterSpacing="0.4em">Y / V / A</text>
+          </svg>
+        );
+      case 'community': 
+        return (
+          <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+            {/* Organic botanical / bean continuous line */}
+            <path d="M150 100C150 127.614 172.386 150 200 150C227.614 150 250 127.614 250 100C250 72.386 227.614 50 200 50C172.386 50 150 72.386 150 100Z" stroke="currentColor" strokeWidth="4"/>
+            <path d="M175 75C200 100 200 125 225 125" stroke="currentColor" strokeWidth="4" strokeLinecap="round"/>
+            <text x="200" y="190" fontFamily="Satoshi, sans-serif" fontSize="32" fontWeight="700" textAnchor="middle" fill="currentColor" letterSpacing="0.05em">yuva.</text>
+          </svg>
+        );
+      default: 
+        return (
+          <svg viewBox="0 0 400 200" fill="none" xmlns="http://www.w3.org/2000/svg" className={className}>
+            <text x="200" y="120" fontFamily="Playfair Display, serif" fontSize="48" fontWeight="600" textAnchor="middle" fill="currentColor" letterSpacing="0.2em">YUVA</text>
+          </svg>
+        );
     }
   };
+
+  if (type === 'hero-logo') {
+    return <div className="w-full max-w-sm md:max-w-xl text-[var(--text-primary)]">{getLogo()}</div>;
+  }
 
   if (type === 'cup') {
     return (

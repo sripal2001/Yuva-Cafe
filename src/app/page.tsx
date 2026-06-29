@@ -3,15 +3,15 @@ import LivePreview from "@/components/LivePreview";
 
 export default function BrandBuilderApp() {
   return (
-    <div className="h-screen w-screen overflow-hidden flex bg-[var(--bg-primary)] text-[var(--text-primary)]">
+    <div className="h-screen w-screen overflow-hidden flex relative bg-[var(--bg-primary)] text-[var(--text-primary)]">
       
-      {/* LEFT PANE: Decision Panel (30%) */}
-      <div className="w-full md:w-[35%] lg:w-[30%] h-full border-r border-[var(--text-secondary)]/20 shadow-2xl relative z-20 bg-[var(--bg-secondary)] overflow-y-auto">
+      {/* LEFT PANE: Floating Glassmorphic Decision Panel */}
+      <div className="absolute left-0 top-0 w-full md:w-[400px] lg:w-[450px] h-full border-r border-[var(--text-secondary)]/10 shadow-[20px_0_50px_rgba(0,0,0,0.3)] z-50 bg-[var(--bg-secondary)]/60 backdrop-blur-3xl overflow-y-auto">
         <BuilderSidebar />
       </div>
 
-      {/* RIGHT PANE: Live Website Preview (70%) */}
-      <div className="hidden md:block flex-1 h-full relative z-10 bg-[var(--bg-primary)] overflow-hidden">
+      {/* RIGHT PANE: Full-Screen Live Website Preview */}
+      <div className="flex-1 h-full relative z-10 bg-[var(--bg-primary)] overflow-hidden">
         <LivePreview />
       </div>
 
