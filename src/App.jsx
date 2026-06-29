@@ -160,7 +160,8 @@ export default function App() {
     const payload = { ...formData, MoodBoardLink: url };
 
     try {
-      const EMAIL = "ishaanaa.info@gmail.com";
+      // Secure FormSubmit token (protects your email from spam bots)
+      const EMAIL = "54554d4b511541920e49a0e6522e54c4";
       await fetch(`https://formsubmit.co/ajax/${EMAIL}`, {
         method: 'POST',
         headers: { 
