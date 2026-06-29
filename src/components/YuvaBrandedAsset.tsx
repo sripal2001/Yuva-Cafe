@@ -3,13 +3,14 @@ import { useDecision } from "@/context/DecisionContext";
 import Image from "next/image";
 
 export default function YuvaBrandedAsset({ type }: { type: 'cup' | 'storefront' | 'menu' | 'instagram' }) {
-  const { activeLogo, activeColor } = useDecision();
+  const { logo, color } = useDecision();
 
   const getLogo = () => {
-    switch (activeLogo) {
-      case 'monogram': return <span className="font-heading text-8xl font-bold tracking-tighter">YV</span>;
+    switch (logo) {
       case 'luxury': return <span className="font-heading text-6xl font-black uppercase tracking-widest">Yuva</span>;
-      case 'geometric': return <span className="font-heading text-7xl font-light uppercase tracking-[0.3em]">Y / V / A</span>;
+      case 'modern': return <span className="font-heading text-7xl font-light uppercase tracking-[0.3em]">Y / V / A</span>;
+      case 'community': return <span className="font-heading text-8xl font-bold tracking-tighter lowercase">yuva.</span>;
+      default: return <span className="font-heading text-6xl font-black uppercase tracking-widest">Yuva</span>;
     }
   };
 

@@ -1,38 +1,76 @@
 "use client";
 import React, { createContext, useContext, useState, ReactNode } from "react";
 
-export type BrandDirection = 'tropical-luxury' | 'creative-hub' | 'social-club' | null;
-export type LogoOption = 'monogram' | 'luxury' | 'geometric';
-export type ColorOption = 'emerald' | 'coral' | 'ocean';
-// We bundle Typography into the Logo decision to reduce fatigue.
-// Monogram -> Playfair, Luxury -> Satoshi, Geometric -> Inter.
+export type LogoOption = 'luxury' | 'modern' | 'community' | null;
+export type ColorOption = 'emerald' | 'coral' | 'ocean' | null;
+export type TypographyOption = 'serif' | 'sans' | 'editorial' | null;
+export type VisualStyleOption = 'luxury' | 'modern' | 'botanical' | null;
+export type PackagingOption = 'minimal' | 'luxury' | 'community' | null;
+export type SocialOption = 'luxury' | 'lifestyle' | 'community' | null;
+export type WebsiteStyleOption = 'hospitality' | 'minimal' | 'editorial' | null;
 
 type DecisionContextType = {
-  brandDirection: BrandDirection;
-  setBrandDirection: (d: BrandDirection) => void;
-  activeLogo: LogoOption;
-  setActiveLogo: (l: LogoOption) => void;
-  activeColor: ColorOption;
-  setActiveColor: (c: ColorOption) => void;
-  boardroomMode: boolean;
-  setBoardroomMode: (m: boolean) => void;
+  logo: LogoOption;
+  setLogo: (v: LogoOption) => void;
+  
+  color: ColorOption;
+  setColor: (v: ColorOption) => void;
+  
+  typography: TypographyOption;
+  setTypography: (v: TypographyOption) => void;
+  
+  visualStyle: VisualStyleOption;
+  setVisualStyle: (v: VisualStyleOption) => void;
+  
+  packaging: PackagingOption;
+  setPackaging: (v: PackagingOption) => void;
+  
+  social: SocialOption;
+  setSocial: (v: SocialOption) => void;
+  
+  websiteStyle: WebsiteStyleOption;
+  setWebsiteStyle: (v: WebsiteStyleOption) => void;
+  
+  features: string[];
+  toggleFeature: (feature: string) => void;
+  
+  currentStep: number;
+  setCurrentStep: (step: number) => void;
 };
 
 const DecisionContext = createContext<DecisionContextType | undefined>(undefined);
 
 export function DecisionProvider({ children }: { children: ReactNode }) {
-  const [brandDirection, setBrandDirection] = useState<BrandDirection>(null);
-  const [activeLogo, setActiveLogo] = useState<LogoOption>('monogram');
-  const [activeColor, setActiveColor] = useState<ColorOption>('emerald');
-  const [boardroomMode, setBoardroomMode] = useState<boolean>(false);
+  const [logo, setLogo] = useState<LogoOption>(null);
+  const [color, setColor] = useState<ColorOption>(null);
+  const [typography, setTypography] = useState<TypographyOption>(null);
+  const [visualStyle, setVisualStyle] = useState<VisualStyleOption>(null);
+  const [packaging, setPackaging] = useState<PackagingOption>(null);
+  const [social, setSocial] = useState<SocialOption>(null);
+  const [websiteStyle, setWebsiteStyle] = useState<WebsiteStyleOption>(null);
+  const [features, setFeatures] = useState<string[]>([]);
+  const [currentStep, setCurrentStep] = useState(0);
+
+  const toggleFeature = (feature: string) => {
+    setFeatures(prev => 
+      prev.includes(feature) 
+        ? prev.filter(f => f !== feature)
+        : [...prev, feature]
+    );
+  };
 
   return (
     <DecisionContext.Provider 
       value={{ 
-        brandDirection, setBrandDirection, 
-        activeLogo, setActiveLogo, 
-        activeColor, setActiveColor, 
-        boardroomMode, setBoardroomMode 
+        logo, setLogo,
+        color, setColor,
+        typography, setTypography,
+        visualStyle, setVisualStyle,
+        packaging, setPackaging,
+        social, setSocial,
+        websiteStyle, setWebsiteStyle,
+        features, toggleFeature,
+        currentStep, setCurrentStep
       }}
     >
       {children}
